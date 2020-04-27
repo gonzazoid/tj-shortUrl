@@ -1,0 +1,37 @@
+<html>
+    <head>
+
+    </head>
+    <body>
+        <h3>Тестовая форма для проверки работоспособности бэка (без CORS)</h3>
+        <form id='shortIt'>
+            <input type="text" id="url" />
+            <input type="submit" value="short it!!!" />
+        </form>
+        <hr />
+        <div><a href=""  id="shortURL"></a></div>
+        <script>
+            const onSubmit = async (evt) => {
+                evt.preventDefault();
+                const body = JSON.stringify({full: document.getElementById("url").value});
+                console.log(body);
+                const options = {method: 'POST'
+                                ,headers: {
+                                    'Content-Type': 'application/json'
+                                 }, 
+                                 body
+                };
+                const res = await fetch('/addUrl', options);
+                const alias = await res.json();
+                console.log(res, alias);
+                const {protocol, host} = window.location;
+                const url = `${protocol}//${host}/${alias.short}`;
+                const link = document.getElementById("shortURL");
+                link.href = url;
+                link.innerHTML = url;
+            };
+            document.getElementById("shortIt").addEventListener("submit", onSubmit);
+        </script>
+        <hr />
+    </body>
+</html>
