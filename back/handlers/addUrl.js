@@ -23,7 +23,7 @@ module.exports = function(ctx){
 
             if(!checkPayload(req.body)){
                 ctx.log('api', 'warn', `wrong payload: ${JSON.stringify(req.body)}`);
-                res.sendStatus();
+                res.sendStatus(400);
             }
 
             if(req.body.short){
